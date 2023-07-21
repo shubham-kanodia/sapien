@@ -1,10 +1,10 @@
 async function main() {
-  const Verifier = await ethers.getContractFactory("Verifier");
-  const verifier = await Verifier.deploy();
+  const Identifier = await ethers.getContractFactory("Identifier");
+  const identifier = await Identifier.deploy();
 
-  await verifier.deployed();
+  await identifier.deployed();
 
-  console.log(`Verifier contract deployed to ${verifier.address}`);
+  console.log(`Identifier contract deployed to ${identifier.address}`);
 }
 
 main()

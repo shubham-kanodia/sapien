@@ -155,13 +155,13 @@ const Home: NextPage = () => {
     }
 
     const callArgs = await buildContractCallArgs(proof, publicSignals);
-    const result = await verifierContract.verifyProof(...callArgs);
+    const result = await verifierContract.addUserByFace(...callArgs);
 
     if (result) {
-      toast.success("Proof successfully validated on chain");
+      toast.success("User added!");
       return;
     }
-    toast.error("Proof was incorrect");
+    toast.error("Invalid user details!");
   };
 
   const onImageChange = async (e: any) => {
