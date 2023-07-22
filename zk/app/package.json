@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@worldcoin/idkit": "^0.5.1",
     "axios": "^1.2.1",
     "blueimp-load-image": "^5.16.0",
     "ndarray": "^1.0.19",

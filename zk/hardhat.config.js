@@ -19,6 +19,10 @@ const config = {
       url: `https://eth-goerli.g.alchemy.com/v2/${goerliApiKey}`,
       accounts: privateKey !== undefined ? [privateKey] : [],
     },
+    mumbai: {
+      url: `https://polygon-mumbai.g.alchemy.com/v2/h-b2j7w7v-hBAL6IozZrEMD280pSb_vk`,
+      accounts: privateKey !== undefined ? [privateKey] : [],
+    }
   },
 };
 

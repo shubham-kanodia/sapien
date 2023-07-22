@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 
+import Link from "next/link";
 import type { NextPage } from "next";
 import Head from "next/head";
 
@@ -11,6 +12,8 @@ import Webcam from "react-webcam";
 import Address from "../components/Address";
 import ClassifyResult from "../components/ClassifyResult";
 import Footer from "../components/Footer";
+
+import WorldIDWidget from "../components/WorldIDWidget";
 
 import {
   getEthereumObject,
@@ -33,7 +36,7 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-const VERIFIER_CONTRACT_ADDR = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const VERIFIER_CONTRACT_ADDR = "0x95c5683d9e9f48F00E32c1Ff4e273631cD105Da5";
 const VERIFIER_CONTRACT_ABI: any = metadata.abi;
 
 const mlModelUrl = "/frontend_model.onnx";
@@ -44,10 +47,13 @@ const description =
 
 const appHeading = "ZK Face Recognition";
 const appDescription =
-  "In this app, we use ZK Snarks and Machine Learning to recognize a face privately";
+  "One Identity, All Chains: Empowering Seamless Connectivity";
 
 const primaryButtonClasses =
   "text-white bg-blue-500 hover:bg-blue-700 font-bold px-4 py-2 rounded-full shadow-lg disabled:opacity-50";
+
+const titlePart1 = "Connect to the world effortlessly with";
+const titlePart2 = "Sapien";
 
 const Home: NextPage = () => {
   const [isModelLoaded, setIsModelLoaded] = useState(false);
@@ -219,8 +225,12 @@ const Home: NextPage = () => {
     classifyAndGenerateProof(image, session);
   }, [image, session]);
 
+  const onSuccess = (proof: any) => {
+    console.log(proof);
+  }
+
   return (
-    <div className="min-h-screen items-center py-2">
+    <div className="flex justify-center place-items-center min-h-screen items-center py-2">
       <Head>
         <title>ZK Face Recognition</title>
         <meta property="og:type" content="website" />
@@ -234,7 +244,7 @@ const Home: NextPage = () => {
       </Head>
       <ToastContainer position="bottom-center" autoClose={1500} closeOnClick />
 
-      <div className="my-4 text-center block ">
+      {/* <div className="my-4 text-center block ">
         {!isMetamaskConnected && (
           <button
             className="mx-auto mt-4 inline-flex items-center rounded border-0 bg-gray-100 py-1 px-3 text-base hover:bg-gray-200 focus:outline-none md:mt-0"
@@ -250,64 +260,34 @@ const Home: NextPage = () => {
         )}
       </div>
 
+      <WorldIDWidget onSuccess={onSuccess} /> */}
+
       <main className="flex w-full flex-1 flex-col items-center px-20 pt-12 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{" "}
-          <a className="text-blue-600" href="https://nextjs.org">
-            {appHeading}
-          </a>
-        </h1>
-
-        <p className="mt-3 text-2xl">{appDescription}</p>
-
-        <div className="my-2">
-          {/* <WebcamCapture setImage={setImage} /> */}
-          <Webcam
-            audio={false}
-            height={720}
-            ref={webcamRef}
-            screenshotFormat="image/jpeg"
-            width={1280}
-            videoConstraints={videoConstraints}
-            className="w-6/12 mx-auto"
-          />
-          {/* <button onClick={capture}>Capture photo</button> */}
+        <div className="maximum-width-control mb-1">
+          <h1 className="inline m-0 text-4xl font-bold text-gray-200 sm:text-5xl lg:text-5xl">
+            {titlePart1}&nbsp;
+          </h1>
+          <h1
+            className="inline m-0 text-4xl font-bold text-gray-200 bg-clip-text sm:text-5xl lg:text-5xl bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent"
+            style={{
+              lineHeight: "1.2",
+            }}
+          >
+            {titlePart2}&nbsp;
+          </h1>
         </div>
 
-        <div className="my-12 mt-6">
-          {!isModelLoaded && <p>Loading model ...</p>}
-
-          {isModelLoaded && (
-            <div className="flex flex-col gap-8 items-center">
-              <div className="flex gap-2 mt-4">
-                <div>
-                  <button
-                    className={primaryButtonClasses}
-                    // onClick={() => classifyAndGenerateProof(image, session)}
-                    onClick={capture}
-                    // disabled={!image}
-                  >
-                    Classify and Generate Proof
-                  </button>
-                </div>
-                <div>
-                  <button
-                    className={primaryButtonClasses}
-                    onClick={() => verifyProof(proof, publicSignals)}
-                    disabled={!Boolean(proof)}
-                  >
-                    Verify Proof on chain
-                  </button>
-                </div>
-              </div>
-              {prediction !== null && prediction !== undefined && (
-                <ClassifyResult prediction={prediction} proof={proof} />
-              )}
-            </div>
-          )}
-        </div>
+        <p className="mt-3 text-2xl bg-gradient-to-b from-sky-400 to-blue-600 bg-clip-text text-transparent">{appDescription}</p>
+        
+        <Link href={"/start"}>
+          <button
+                  type="button"
+                  className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-blue-600 px-3 py-1 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 tracking-wide"
+                >
+                  Begin
+          </button>
+        </Link>
       </main>
-      <Footer />
     </div>
   );
 };

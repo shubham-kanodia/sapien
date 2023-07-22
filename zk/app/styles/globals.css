@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    background: #282c35;
+    color: white;
+}
+
+.maximum-width-control{
+  max-width: 750px;
+  margin: auto;
+}

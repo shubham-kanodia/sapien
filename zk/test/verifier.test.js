@@ -20,6 +20,8 @@ describe("face recognition test", () => {
       path.resolve(__dirname, "../output/circuit_js/circuit.wasm"),
       path.resolve(__dirname, "../ptau-ceremony/circuit_0001.zkey")
     );
+
+    console.log(publicSignals);
     const callArgs = await buildContractCallArgs(proof, publicSignals);
     const result = await verifier.verifyProof(...callArgs);
     expect(result).equals(true);

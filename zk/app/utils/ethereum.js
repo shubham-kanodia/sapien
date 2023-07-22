@@ -1,19 +1,23 @@
 import { ethers } from "ethers";
+import { MetaMaskSDK } from '@metamask/sdk';
 
 // 1: Mainnet
 // 5: Goerli
 // 1337: localhost network
 
-const networkId = process.env.NEXT_PUBLIC_NETWORK_ID || "1337";
+const networkId = process.env.NEXT_PUBLIC_NETWORK_ID || "80001";
 const networks = {
   1: "mainnet",
   5: "goerli",
+  80001: "mumbai",
   1337: "localhost",
 };
 export const networkName = networks[networkId];
+// const MMSDK = new MetaMaskSDK({});
 
 export const getEthereumObject = () => {
   const { ethereum } = window;
+
   if (!ethereum) return null;
 
   if (ethereum.networkVersion != networkId) {
