@@ -20,7 +20,7 @@ export const getEthereumObject = () => {
   if (!ethereum) return null;
 
   if (ethereum.networkVersion != networkId) {
-    alert(`Please switch to the ${networkName} network`);
+    alert(`Please switch to the ${networkName} network, current network version - ${ethereum.networkVersion}`);
     return null;
   }
 
