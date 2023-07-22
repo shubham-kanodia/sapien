@@ -182,6 +182,7 @@ const Home: NextPage = () => {
   };
 
   const addUser = async () => {
+    // @ts-ignore
     if (!window?.ethereum || !account) {
       toast.error("Please connect your MetaMask walet");
       return;
