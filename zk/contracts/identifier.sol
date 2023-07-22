@@ -2,6 +2,8 @@
 pragma solidity ^0.6.11;
 
 import "./verifier.sol";
+import "./interfaces/IInterchainGasPaymaster.sol";
+import "./interfaces/IMailBox.sol";
 
 contract Identifier {
     using Pairing for *;
@@ -13,8 +15,13 @@ contract Identifier {
     }
 
     Verifier verifier;
-    
-    constructor() public {
+    address mailBoxAddress;
+    address igpAddress;
+
+    constructor(address _mailBoxAddress, address _igpAddress) public {
+        mailBoxAddress = _mailBoxAddress;
+        igpAddress = _igpAddress;
+
         verifier = new Verifier();
     }
 
@@ -65,5 +72,28 @@ contract Identifier {
         currUserId++;
 
         registered[msg.sender] = true;
+    }
+
+    function addressToBytes32(address _addr) internal pure returns (bytes32) {
+        return bytes32(uint256(uint160(_addr)));
+    }
+
+    function updateRemote(
+        uint32 _destinationDomain,
+        address _recipientAddress,
+        uint256 _gasAmount
+    ) public payable {
+        bytes32 _messageId = IMailbox(mailBoxAddress).dispatch(
+            _destinationDomain,
+            addressToBytes32(_recipientAddress),
+            abi.encode(msg.sender, users[msg.sender])
+        );
+
+        IInterchainGasPaymaster(igpAddress).payForGas{value: msg.value}(
+            _messageId,
+            _destinationDomain,
+            _gasAmount,
+            msg.sender
+        );
     }
 }

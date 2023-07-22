@@ -1,7 +1,7 @@
 require("@nomicfoundation/hardhat-toolbox");
 
 const goerliApiKey = process.env.GOERLI_ALCHEMY_API_KEY || "";
-const privateKey = process.env.PRIVATE_KEY;
+const privateKey = ""
 
 const config = {
   solidity: {
@@ -21,6 +21,10 @@ const config = {
     },
     mumbai: {
       url: `https://polygon-mumbai.g.alchemy.com/v2/h-b2j7w7v-hBAL6IozZrEMD280pSb_vk`,
+      accounts: privateKey !== undefined ? [privateKey] : []
+    },
+    celo: {
+      url: "https://alfajores-forno.celo-testnet.org",
       accounts: privateKey !== undefined ? [privateKey] : [],
     }
   },

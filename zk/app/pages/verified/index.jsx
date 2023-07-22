@@ -16,7 +16,8 @@ import {
 
 import "react-toastify/dist/ReactToastify.css";
 
-const VERIFIER_CONTRACT_ADDR = "0x95c5683d9e9f48F00E32c1Ff4e273631cD105Da5";
+const VERIFIER_CONTRACT_ADDR = "0xdd767c6dD29570549CcF948a00527c5d7ee27dB5";
+const REMOTE_IDENTITY_ADDR_CELO = "0xB00D5cc55162741F9a680F16D430eD07067aFd0C";
 const VERIFIER_CONTRACT_ABI = metadata.abi;
 
 const primaryButtonClasses =
@@ -27,6 +28,7 @@ const Verified = () => {
 
   const [account, setAccount] = useState();
   const [verifierContract, setVerifierContract] = useState();
+  const [polyCeloTxHash, setPolyCeloTxHash] = useState();
 
   const setupWallet = async () => {
     const ethereum = getEthereumObject();
@@ -51,6 +53,31 @@ const Verified = () => {
   }, []);
 
   const isMetamaskConnected = !!account;
+
+  const updateRemoteData = async () => {
+    if (!window?.ethereum || !account) {
+      toast.error("Please connect your MetaMask walet");
+      return;
+    }
+
+    try {
+      const result = await verifierContract.updateRemote(44787, REMOTE_IDENTITY_ADDR_CELO, 200000, { value: 2338284000000000 });
+
+      // Sample Hash - 0x226f367f200dc173028a09fdf7dd6376697b323a13bc8a984e4b903a6e0a0493 https://mumbai.polygonscan.com/tx/
+      setPolyCeloTxHash(result["hash"]);
+
+      if (result) {
+        toast.success("User added!");
+        router.push("/verified");
+        return;
+      }
+      toast.error("Invalid user details!");
+    }
+
+    catch (e) {
+      toast.error("User already registered!");
+    }
+  };
 
   return (
     <div className="min-h-screen items-center py-2">
@@ -78,13 +105,15 @@ const Verified = () => {
 
       <div className="mt-10 flex flex-row place-items-center">
         <h2 className="font-semibold text-sm w-1/2">CELO</h2>
-        <button className="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-3 py-1 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 tracking-wide">Add Identity to chain</button>
+        <button onClick={() => updateRemoteData()} className="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-3 py-1 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 tracking-wide">{polyCeloTxHash ? "Connected": "Add Identity to chain"}</button>
       </div>
+      {polyCeloTxHash && <p className="text-xs">This transaction has been posted on chain. Check status <a href={`https://mumbai.polygonscan.com/tx/${polyCeloTxHash}`}>here</a></p>}
 
       <div className="mt-10 flex flex-row place-items-center">
         <h2 className="font-semibold text-sm w-1/2">Gnosis Chain</h2>
         <button className="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-3 py-1 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 tracking-wide">Add Identity to chain</button>
       </div>
+      {false && <p className="text-xs">This transaction has been posted on chain. Check status <a className="text-sky-400" href={`https://mumbai.polygonscan.com/tx/${polyCeloTxHash}`}>here</a></p>}
       
     </div>
     </div>
