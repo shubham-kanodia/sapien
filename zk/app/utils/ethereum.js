@@ -12,7 +12,6 @@ const networks = {
   1337: "localhost",
 };
 export const networkName = networks[networkId];
-// const MMSDK = new MetaMaskSDK({});
 
 export const getEthereumObject = () => {
   const { ethereum } = window;
