@@ -1,5 +1,4 @@
 import { ethers } from "ethers";
-import { MetaMaskSDK } from '@metamask/sdk';
 
 // 1: Mainnet
 // 5: Goerli
