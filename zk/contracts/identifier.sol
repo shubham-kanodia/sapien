@@ -43,8 +43,10 @@ contract Identifier {
 
         uint identityNum = input[16];
         
-        require(!faceAdded[identityNum], "Identity already associated");
-        require(!registered[msg.sender], "Address already registered");
+        // Below lines commented out only for demo purposes
+
+        // require(!faceAdded[identityNum], "Identity already associated");
+        // require(!registered[msg.sender], "Address already registered");
         faceAdded[identityNum] = true;
         
         // require(!faceAdded[..], "Identity already associated")

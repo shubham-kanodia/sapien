@@ -24,7 +24,7 @@ const config = {
       accounts: privateKey !== undefined ? [privateKey] : []
     },
     celo: {
-      url: "https://alfajores-forno.celo-testnet.,org",
+      url: "https://alfajores-forno.celo-testnet.org",
       accounts: privateKey !== undefined ? [privateKey] : [],
     },
     era: {
