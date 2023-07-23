@@ -89,7 +89,7 @@ const Home: NextPage = () => {
       formData.append("file", fileInput);
 
       const response = await axios.post(
-        "https://3388-2001-861-71-8dd0-75dc-f4c9-ac7-7247.ngrok-free.app/embeddings",
+        "https://3fb8-91-197-136-110.ngrok-free.app/embeddings",
         formData,
         {
           headers: {
