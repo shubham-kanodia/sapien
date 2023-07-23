@@ -66,7 +66,8 @@ contract Identifier {
     }
 
     function addUser() public {
-        require(!registered[msg.sender], "Address already registered");
+        // Commented out only for demo purposes
+        // require(!registered[msg.sender], "Address already registered");
 
         identities[currUserId] = msg.sender;
         users[msg.sender] = currUserId;

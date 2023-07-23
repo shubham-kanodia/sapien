@@ -36,7 +36,7 @@ const videoConstraints = {
   facingMode: "user",
 };
 
-const VERIFIER_CONTRACT_ADDR = "0x93F1F934b2a61658c360304Bfaa9d684B3878cd1";
+const VERIFIER_CONTRACT_ADDR = "0x1Af593E29455b4AE097C7b76A0598561829fD7C0";
 const VERIFIER_CONTRACT_ABI: any = metadata.abi;
 
 const mlModelUrl = "/frontend_model.onnx";
